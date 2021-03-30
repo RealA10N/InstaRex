@@ -309,6 +309,7 @@ def resize_image(img):
     v_lim = {"w": 4.0, "h": 5.0}
     (w, h) = img.size
     deg = 0
+
     try:
         for orientation in ExifTags.TAGS.keys():
             if ExifTags.TAGS[orientation] == "Orientation":
@@ -325,12 +326,14 @@ def resize_image(img):
             print("Rotating by {d} degrees".format(d=deg))
             img = img.rotate(deg, expand=True)
             (w, h) = img.size
+
     except (AttributeError, KeyError, IndexError) as e:
         print("No exif info found (ERR: {err})".format(err=e))
-        pass
+
     img = img.convert("RGBA")
     ratio = w * 1.0 / h * 1.0
     print("FOUND w:{w}, h:{h}, ratio={r}".format(w=w, h=h, r=ratio))
+
     if w > h:
         print("Horizontal image")
         if ratio > (h_lim["w"] / h_lim["h"]):
@@ -347,6 +350,7 @@ def resize_image(img):
             nw = 1080
             nh = int(ceil(1080.0 * h / w))
             img = img.resize((nw, nh), Image.ANTIALIAS)
+
     elif w < h:
         print("Vertical image")
         if ratio < (v_lim["w"] / v_lim["h"]):
@@ -363,11 +367,13 @@ def resize_image(img):
             nw = int(ceil(1080.0 * w / h))
             nh = 1080
             img = img.resize((nw, nh), Image.ANTIALIAS)
+
     else:
         print("Square image")
         if w > 1080:
             print("Resizing image")
             img = img.resize((1080, 1080), Image.ANTIALIAS)
+
     (w, h) = img.size
     new = Image.new("RGB", img.size, (255, 255, 255))
     new.paste(img, (0, 0, w, h), img)
