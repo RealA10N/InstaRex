@@ -80,8 +80,8 @@ def compatible_aspect_ratio(size):
     return min_ratio <= ratio <= max_ratio
 
 
-def configure_photo(self, upload_id, photo, caption="", user_tags=None, is_sidecar=False):
-    width, height = get_image_size(photo)
+def configure_photo(self, upload_id, photo_size, caption="", user_tags=None, is_sidecar=False):
+    width, height = photo_size
     data = {
             "media_folder": "Instagram",
             "source_type": 4,
@@ -149,7 +149,7 @@ def upload_photo(
         upload_id = int(time.time() * 1000)
     if not photo:
         return False
-    if not compatible_aspect_ratio(get_image_size(photo)):
+    if not compatible_aspect_ratio(photo.size):
         self.logger.error("Photo does not have a compatible photo aspect ratio.")
         if force_resize:
             photo = resize_image(photo)
@@ -209,11 +209,11 @@ def upload_photo(
         if configure_timeout:
             time.sleep(configure_timeout)
         if is_sidecar:
-            configuration = self.configure_photo(upload_id, photo, caption, usertags, is_sidecar=True)
+            configuration = self.configure_photo(upload_id, photo.size, caption, usertags, is_sidecar=True)
             if options.get("rename"):
                 os.rename(photo, "{fname}.REMOVE_ME".format(fname=photo))
             return configuration
-        elif self.configure_photo(upload_id, photo, caption, usertags, is_sidecar=False):
+        elif self.configure_photo(upload_id, photo.size, caption, usertags, is_sidecar=False):
             media = self.last_json.get("media")
             self.expose()
             if options.get("rename"):
@@ -267,38 +267,6 @@ def upload_album(
         "children_metadata": photo_metas
     })
     return self.send_request("media/configure_sidecar/?", post=data)
-
-
-def get_image_size(fname):
-    with open(fname, "rb") as fhandle:
-        head = fhandle.read(24)
-        if len(head) != 24:
-            raise RuntimeError("Invalid Header")
-
-        if imghdr.what(fname) == "png":
-            check = struct.unpack(">i", head[4:8])[0]
-            if check != 0x0D0A1A0A:
-                raise RuntimeError("PNG: Invalid check")
-            width, height = struct.unpack(">ii", head[16:24])
-        elif imghdr.what(fname) == "gif":
-            width, height = struct.unpack("<HH", head[6:10])
-        elif imghdr.what(fname) == "jpeg":
-            fhandle.seek(0)  # Read 0xff next
-            size = 2
-            ftype = 0
-            while not 0xC0 <= ftype <= 0xCF:
-                fhandle.seek(size, 1)
-                byte = fhandle.read(1)
-                while ord(byte) == 0xFF:
-                    byte = fhandle.read(1)
-                ftype = ord(byte)
-                size = struct.unpack(">H", fhandle.read(2))[0] - 2
-            # We are at a SOFn block
-            fhandle.seek(1, 1)  # Skip `precision' byte.
-            height, width = struct.unpack(">HH", fhandle.read(4))
-        else:
-            raise RuntimeError("Unsupported format")
-        return width, height
 
 
 def resize_image(img):
