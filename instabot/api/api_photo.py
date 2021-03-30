@@ -9,6 +9,8 @@ import time
 import random
 from uuid import uuid4
 
+from PIL import Image, ExifTags
+from math import ceil
 
 from . import config
 
@@ -299,22 +301,12 @@ def get_image_size(fname):
         return width, height
 
 
-def resize_image(fname):
-    from math import ceil
+def resize_image(img):
+    """ Recives a PIL image object, and returns another PIL resized image
+    object - to match Instagram's post sizes. """
 
-    try:
-        from PIL import Image, ExifTags
-    except ImportError as e:
-        print("ERROR: {err}".format(err=e))
-        print(
-            "Required module `PIL` not installed\n"
-            "Install with `pip install Pillow` and retry"
-        )
-        return False
-    print("Analizing `{fname}`".format(fname=fname))
     h_lim = {"w": 90.0, "h": 47.0}
     v_lim = {"w": 4.0, "h": 5.0}
-    img = Image.open(fname)
     (w, h) = img.size
     deg = 0
     try:
@@ -377,12 +369,9 @@ def resize_image(fname):
             print("Resizing image")
             img = img.resize((1080, 1080), Image.ANTIALIAS)
     (w, h) = img.size
-    new_fname = "{fname}.CONVERTED.jpg".format(fname=fname)
-    print("Saving new image w:{w} h:{h} to `{f}`".format(w=w, h=h, f=new_fname))
     new = Image.new("RGB", img.size, (255, 255, 255))
     new.paste(img, (0, 0, w, h), img)
-    new.save(new_fname, quality=95)
-    return new_fname
+    return new
 
 
 def stories_shaper(fname):
