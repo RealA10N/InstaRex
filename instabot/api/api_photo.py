@@ -83,18 +83,18 @@ def compatible_aspect_ratio(size):
 def configure_photo(self, upload_id, photo_size, caption="", user_tags=None, is_sidecar=False):
     width, height = photo_size
     data = {
-            "media_folder": "Instagram",
-            "source_type": 4,
-            "caption": caption,
-            "upload_id": upload_id,
-            "device": self.device_settings,
-            "edits": {
-                "crop_original_size": [width * 1.0, height * 1.0],
-                "crop_center": [0.0, 0.0],
-                "crop_zoom": 1.0,
-            },
-            "extra": {"source_width": width, "source_height": height},
-        }
+        "media_folder": "Instagram",
+        "source_type": 4,
+        "caption": caption,
+        "upload_id": upload_id,
+        "device": self.device_settings,
+        "edits": {
+            "crop_original_size": [width * 1.0, height * 1.0],
+            "crop_center": [0.0, 0.0],
+            "crop_zoom": 1.0,
+        },
+        "extra": {"source_width": width, "source_height": height},
+    }
     if user_tags:
         data['usertags'] = user_tags
 
