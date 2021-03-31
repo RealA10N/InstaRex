@@ -1,46 +1,17 @@
-This code is no longer maintaned. Don't try to run anything from here - you will be easily detected and banned by Instagram. 
-
-Join our [Telegram community](https://t.me/instabotproject) to find more tools, projects and growth hacking methods.
-
-Read why you shouldn't run any bots: [it is no longer safe](https://likeup.me/bots-are-dead/?utm_source=instabot-github-readme).
-
---------------------------
---------------------------
---------------------------
---------------------------
---------------------------
---------------------------
---------------------------
---------------------------
---------------------------
---------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # Instabot
 
 Free Instagram python bot, [private Instagram API emulator](https://github.com/instagrambot/instabot/tree/master/instabot/api) and a [huge amount of ready-to-use example scripts](https://github.com/instagrambot/instabot/tree/master/examples).
 
 We are the most used Instagram library on GitHub (according to "Used by" counter). 🎉 Join our [Large Telegram community](https://t.me/instabotproject) for more Instagram tricks. 🚀
 
-
 ### Important
 
 Right now the usage of this library (as probably others too) may harm your Instagram's profile because of new script-detection algorithms. You were warned.
 
 ---
+
 ### [Read the Docs](https://instagrambot.github.io/docs/) | [Contribute](https://github.com/instagrambot/docs/blob/master/CONTRIBUTING.md)
+
 ---
 
 [![Telegram Chat](https://img.shields.io/badge/chat%20on-Telegram-blue.svg)](https://t.me/instabotproject)
@@ -51,8 +22,10 @@ Right now the usage of this library (as probably others too) may harm your Insta
 [![codecov](https://codecov.io/gh/instagrambot/instabot/branch/master/graph/badge.svg)](https://codecov.io/gh/instagrambot/instabot)
 
 ### Installation
+
 Install `instabot` with:
-``` bash
+
+```bash
 pip install -U instabot
 ```
 
@@ -69,10 +42,12 @@ Instabot has a lot of predefined filters (like skipping very popular accounts be
 JOIN OUR TELEGRAM COMMUNITY OF INSTAGRAM GROWTH HACKERS: https://t.me/instabotproject
 
 # Terms and conditions
-* You will NOT run the code provided in this repo
-* You will NOT use this API for marketing purposes (spam, botting, harassment, massive bulk messaging...).
-* We do NOT give support to anyone who wants to use this API to send spam or commit other crimes.
-* We reserve the right to block any user of this repository that does not meet these conditions.
+
+- You will NOT run the code provided in this repo
+- You will NOT use this API for marketing purposes (spam, botting, harassment, massive bulk messaging...).
+- We do NOT give support to anyone who wants to use this API to send spam or commit other crimes.
+- We reserve the right to block any user of this repository that does not meet these conditions.
 
 # Legal
+
 This code is in no way affiliated with, authorized, maintained, sponsored or endorsed by Instagram, Facebook inc. or any of its affiliates or subsidiaries. This is an independent and unofficial API. Use it at your own risk.
