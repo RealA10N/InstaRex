@@ -2,7 +2,8 @@ name: CI
 on: [push, pull_request]
 
 jobs:
-  - name: Install module
+  build:
+    name: Install module
     runs-on: ubuntu-latest
     strategy:
       matrix:
