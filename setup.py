@@ -32,7 +32,7 @@ setup(
         "responses>=0.10.9",
         "schedule>=0.6.0",
         "six>=1.14.0",
-        "rsa>=4.7.2",
+        "rsa>=4.7.0",
         "tqdm>=4.41.1",
         "urllib3>=1.25.7",
         "mock>=3.0.5",
