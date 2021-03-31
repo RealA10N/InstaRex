@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 import imghdr
 import os
+import io
 import shutil
 import struct
 import json
@@ -9,7 +10,7 @@ import time
 import random
 from uuid import uuid4
 
-from PIL import Image, ExifTags
+from PIL import Image, ExifTags, ImageFilter
 from math import ceil
 
 from . import config
@@ -118,7 +119,8 @@ def upload_photo(
 ):
     """Upload photo to Instagram
 
-    @param photo         Path to photo file (String)
+    @param photo         Path to photo file (String), a file-like object, or a
+                         PIL image instance.
     @param caption       Media description (String)
     @param upload_id     Unique upload_id (String). When None, then generate
                          automatically
@@ -127,7 +129,7 @@ def upload_photo(
                          (Boolean, DEPRECATED: not used)
     @param force_resize  Force photo resize (Boolean)
     @param options       Object with difference options, e.g.
-                         configure_timeout, rename (Dict)
+                         configure_timeout (Dict)
                          Designed to reduce the number of function arguments!
                          This is the simplest request object.
     @param user_tags     Tag other users (List)
@@ -144,11 +146,16 @@ def upload_photo(
         tags = {'in': [{'user_id': user['user_id'], 'position': [user['x'], user['y']]} for user in user_tags]}
         usertags = json.dumps(tags, separators=(',', ':'))
 
-    options = dict({"configure_timeout": 15, "rename": True}, **(options or {}))
+    options = dict({"configure_timeout": 15}, **(options or {}))
     if upload_id is None:
         upload_id = int(time.time() * 1000)
     if not photo:
         return False
+
+    if not isinstance(photo, Image.Image):
+        # If not a PIL image instance, loads the image as a PIL instance.
+        photo = Image.open(photo)
+
     if not compatible_aspect_ratio(photo.size):
         self.logger.error("Photo does not have a compatible photo aspect ratio.")
         if force_resize:
@@ -170,7 +177,13 @@ def upload_photo(
     }
     if is_sidecar:
         rupload_params["is_sidecar"] = "1"
-    photo_data = open(photo, "rb").read()
+
+    # Save PIL image to memory
+    with io.BytesIO() as buffer:
+        buffer = io.BytesIO()
+        photo.save(buffer, format='JPEG')
+        photo_data = buffer.getvalue()
+
     photo_len = str(len(photo_data))
     self.session.headers.update(
         {
@@ -209,15 +222,10 @@ def upload_photo(
         if configure_timeout:
             time.sleep(configure_timeout)
         if is_sidecar:
-            configuration = self.configure_photo(upload_id, photo.size, caption, usertags, is_sidecar=True)
-            if options.get("rename"):
-                os.rename(photo, "{fname}.REMOVE_ME".format(fname=photo))
-            return configuration
+            return self.configure_photo(upload_id, photo.size, caption, usertags, is_sidecar=True)
         elif self.configure_photo(upload_id, photo.size, caption, usertags, is_sidecar=False):
             media = self.last_json.get("media")
             self.expose()
-            if options.get("rename"):
-                os.rename(photo, "{fname}.REMOVE_ME".format(fname=photo))
             return media
     return False
 
@@ -348,31 +356,21 @@ def resize_image(img):
     return new
 
 
-def stories_shaper(fname):
+def stories_shaper(img):
     """
+    Recives and returns PIL image instances.
     Find out the size of the uploaded image. Processing is not needed if the
     image is already 1080x1920 pixels. Otherwise, the image height should be
     1920 pixels. Substrate formation: Crop the image under 1080x1920 pixels
     and apply a Gaussian Blur filter. Centering the image depending on its
-    aspect ratio and paste it onto the substrate. Save the image.
+    aspect ratio and paste it onto the substrate.
     """
-    try:
-        from PIL import Image, ImageFilter
-    except ImportError as e:
-        print("ERROR: {err}".format(err=e))
-        print(
-            "Required module `PIL` not installed\n"
-            "Install with `pip install Pillow` and retry"
-        )
-        return False
-    img = Image.open(fname)
+
     if (img.size[0], img.size[1]) == (1080, 1920):
         print("Image is already 1080x1920. Just converting image.")
-        new_fname = "{fname}.STORIES.jpg".format(fname=fname)
         new = Image.new("RGB", (img.size[0], img.size[1]), (255, 255, 255))
         new.paste(img, (0, 0, img.size[0], img.size[1]))
-        new.save(new_fname)
-        return new_fname
+
     else:
         min_width = 1080
         min_height = 1920
@@ -414,13 +412,8 @@ def stories_shaper(fname):
             height_size = int(float(img.size[1]) * float(width_percent))
             img = img.resize((min_width, height_size), Image.ANTIALIAS)
             img_bg.paste(img, (int(540 - img.size[0] / 2), int(960 - img.size[1] / 2)))
-        new_fname = "{fname}.STORIES.jpg".format(fname=fname)
-        print(
-            "Saving new image w:{w} h:{h} to `{f}`".format(
-                w=img_bg.size[0], h=img_bg.size[1], f=new_fname
-            )
-        )
+
         new = Image.new("RGB", (img_bg.size[0], img_bg.size[1]), (255, 255, 255))
         new.paste(img_bg, (0, 0, img_bg.size[0], img_bg.size[1]))
-        new.save(new_fname)
-        return new_fname
+
+    return new

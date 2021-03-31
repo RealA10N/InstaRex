@@ -2,14 +2,17 @@ from __future__ import unicode_literals
 
 import json
 import os
+import io
 import shutil
 import time
 from random import randint
 
 from requests_toolbelt import MultipartEncoder
 
+from PIL import Image
+
 from . import config
-from .api_photo import get_image_size, stories_shaper
+from .api_photo import stories_shaper
 
 
 def download_story(self, filename, story_url, username):
@@ -29,14 +32,22 @@ def download_story(self, filename, story_url, username):
 
 
 def upload_story_photo(self, photo, upload_id=None):
+
     if upload_id is None:
         upload_id = str(int(time.time() * 1000))
-    photo = stories_shaper(photo)
+
     if not photo:
         return False
 
-    with open(photo, "rb") as f:
-        photo_bytes = f.read()
+    if not isinstance(photo, Image.Image):
+        photo = Image.open(photo)
+
+    photo = stories_shaper(photo)
+
+    # Save bytes of photo
+    with io.BytesIO() as buffer:
+        photo.save(buffer, format='JPEG')
+        photo_bytes = buffer.getvalue()
 
     data = {
         "upload_id": upload_id,
@@ -64,14 +75,14 @@ def upload_story_photo(self, photo, upload_id=None):
 
     if response.status_code == 200:
         upload_id = json.loads(response.text).get("upload_id")
-        if self.configure_story(upload_id, photo):
+        if self.configure_story(upload_id, photo.size):
             # self.expose()
             return True
     return False
 
 
-def configure_story(self, upload_id, photo):
-    (w, h) = get_image_size(photo)
+def configure_story(self, upload_id, photo_size):
+    w, h = photo_size
     data = self.json_data(
         {
             "source_type": 4,
