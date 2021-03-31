@@ -17,9 +17,9 @@ import six.moves.urllib as urllib
 
 from requests_toolbelt import MultipartEncoder
 from tqdm import tqdm
-from Crypto.PublicKey import RSA
 import rsa
 from Cryptodome.Cipher import AES
+from Cryptodome.PublicKey import RSA
 
 from . import config, devices
 from .api_login import (
@@ -226,7 +226,6 @@ class API(object):
         )
 
         public_key = RSA.importKey(base64_decoded_device_public_key)
-
         encrypted_aes_key = rsa.encrypt(key, public_key)
 
         cipher = AES.new(key, AES.MODE_GCM, iv)
