@@ -18,8 +18,8 @@ import six.moves.urllib as urllib
 from requests_toolbelt import MultipartEncoder
 from tqdm import tqdm
 import rsa
-from Cryptodome.Cipher import AES
-from Cryptodome.PublicKey import RSA
+from Crypto.Cipher import AES
+from Crypto.PublicKey import RSA
 
 from . import config, devices
 from .api_login import (
