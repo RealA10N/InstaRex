@@ -1,4 +1,4 @@
-# Insta-rex
+![Instarex](/assets/instarex-thin-banner.png)
 
 [![Build Status](https://img.shields.io/github/workflow/status/reala10n/insta-rex/Build?style=flat)](ttps://github.com/reala10n/insta-rex/)
 [![PyPI version](https://badge.fury.io/py/insta-rex.svg)](https://badge.fury.io/py/insta-rex)
