@@ -14,15 +14,15 @@ with open(path.join(here, "requirements.txt")) as f:
     requirements_txt = f.read().splitlines()
 
 setup(
-    name="instabot",
+    name="instarex",
     version="0.117.0",
-    description="Instagram bot scripts for promotion and API python wrapper.",
+    description="Develop Instagram bots with ease!",
     long_description=long_description,
     author="Alon Krymgand, Daniil Okhlopkov, Evgeny Kemerov",
     author_email="downtown2u@gmail.com, danokhlopkov@gmail.com, eskemerov@gmail.com",
     license="Apache Software License 2.0",
-    url="https://github.com/instagrambot/instabot",
-    keywords=["instagram", "bot", "api", "wrapper"],
+    url="https://github.com/reala10n/instarex",
+    keywords=["instagram", "uploader", "bot", "api", "wrapper"],
     install_requires=requirements_txt,
     classifiers=[
         "Development Status :: 4 - Beta",
