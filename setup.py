@@ -25,9 +25,7 @@ setup(
     keywords=["instagram", "bot", "api", "wrapper"],
     install_requires=requirements_txt,
     classifiers=[
-        # How mature is this project? Common values are
-        "Development Status :: 5 - Production/Stable",
-        # Indicate who your project is intended for
+        "Development Status :: 4 - Beta",
         "Intended Audience :: Information Technology",
         "License :: OSI Approved :: Apache Software License",
         "Programming Language :: Python :: 3",
