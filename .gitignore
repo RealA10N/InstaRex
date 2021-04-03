@@ -7,6 +7,10 @@ secret.txt
 # Files with downloaded data
 *.tsv
 
+# Temp files
+*.temp
+*.tmp
+
 # Photos
 examples/photos/
 
