@@ -1,2 +1,0 @@
-./pics/01.jpg
-./pics/02.jpg
