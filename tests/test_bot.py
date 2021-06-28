@@ -2,7 +2,7 @@ import json
 
 import requests
 
-from instabot import Bot
+from instarex import Bot
 
 try:
     from unittest.mock import Mock, patch
@@ -54,7 +54,7 @@ class TestBot:
 
 
 class TestBotAPI(TestBot):
-    @patch("instabot.API.load_uuid_and_cookie")
+    @patch("instarex.API.load_uuid_and_cookie")
     def test_login(self, load_cookie_mock):
         self.bot = Bot(save_logfile=False)
 

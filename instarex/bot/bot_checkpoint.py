@@ -11,7 +11,7 @@ CHECKPOINT_PATH = "{fname}.checkpoint"
 
 class Checkpoint(object):
     """
-        Checkpoint for instabot.Bot class which can store:
+        Checkpoint for instarex.Bot class which can store:
             .total[<name>] - all Bot's counters
             .blocked_actions[<name>] - Bot's blocked actions
             .following (list of user_ids)

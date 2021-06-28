@@ -531,7 +531,7 @@ TEST_USER_TAG_ITEM = {
 }
 
 TEST_MEDIA_LIKER = {
-    u"full_name": u"Instagrambot Instabot",
+    u"full_name": u"Instagrambot instarex",
     u"is_private": False,
     u"is_verified": False,
     u"pk": 9876543210,
@@ -540,7 +540,7 @@ TEST_MEDIA_LIKER = {
     + u"1234567890abcdef1234567890abcdef/ABCDEF12/t00.0000-00/s150x150/"
     + u"12345678_1234567890123456_1234567890123456789_n.jpg?_nc_ht=instagram"
     + u".fmxp5-1.fna.fbcdn.net",
-    u"username": u"instabot",
+    u"username": u"instarex",
 }
 
 TEST_FOLLOWER_ITEM = {
@@ -574,7 +574,7 @@ TEST_FOLLOWING_ITEM = {
 }
 
 TEST_COMMENT_LIKER_ITEM = {
-    u"full_name": u"Instagrambot Instabot",
+    u"full_name": u"Instagrambot instarex",
     u"is_private": False,
     u"is_verified": False,
     u"pk": 9876543210,
@@ -582,7 +582,7 @@ TEST_COMMENT_LIKER_ITEM = {
     + u"1234567890abcdef1234567890abcdef/ABCDEF12/t00.0000-00/s150x150/"
     + u"12345678_1234567890123456_1234567890123456789_n.jpg?_nc_ht=instagram."
     + u"fmxp5-1.fna.fbcdn.net",
-    u"username": u"instabot",
+    u"username": u"instarex",
 }
 
 TEST_LOCATION_ITEM = {

@@ -1,7 +1,7 @@
 import pytest
 import responses
 
-from instabot.api.config import API_URL
+from instarex.api.config import API_URL
 
 from .test_bot import TestBot
 from .test_variables import TEST_USERNAME_INFO_ITEM

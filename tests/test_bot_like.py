@@ -1,7 +1,7 @@
 import pytest
 import responses
 
-from instabot.api.config import API_URL, SIG_KEY_VERSION
+from instarex.api.config import API_URL, SIG_KEY_VERSION
 
 from .test_bot import TestBot
 from .test_variables import (
@@ -131,7 +131,7 @@ class TestBotGet(TestBot):
         if comment_txt:
             comment_txt = " ".join(self.bot.blacklist_hashtags)
         else:
-            comment_txt = "instabot"
+            comment_txt = "instarex"
         TEST_USERNAME_INFO_ITEM["biography"] = comment_txt
 
         responses.add(
@@ -300,7 +300,7 @@ class TestBotGet(TestBot):
     def test_like_user(self, patched_time_sleep, user_id):
         self.bot._following = [1]
 
-        TEST_USERNAME_INFO_ITEM["biography"] = "instabot"
+        TEST_USERNAME_INFO_ITEM["biography"] = "instarex"
 
         response_data = {"status": "ok", "user": TEST_SEARCH_USERNAME_ITEM}
         responses.add(
@@ -428,7 +428,7 @@ class TestBotGet(TestBot):
 
         self.bot._following = [1]
 
-        TEST_USERNAME_INFO_ITEM["biography"] = "instabot"
+        TEST_USERNAME_INFO_ITEM["biography"] = "instarex"
 
         response_data = {"status": "ok", "user": TEST_SEARCH_USERNAME_ITEM}
         responses.add(
@@ -973,7 +973,7 @@ class TestBotGet(TestBot):
 
         self.bot._following = [1]
 
-        TEST_USERNAME_INFO_ITEM["biography"] = "instabot"
+        TEST_USERNAME_INFO_ITEM["biography"] = "instarex"
         my_test_photo_item = TEST_PHOTO_ITEM.copy()
         my_test_photo_item["like_count"] = self.bot.min_likes_to_like + 1
         my_test_photo_item["has_liked"] = False
@@ -1150,7 +1150,7 @@ class TestBotGet(TestBot):
 
         self.bot._following = [1]
 
-        TEST_USERNAME_INFO_ITEM["biography"] = "instabot"
+        TEST_USERNAME_INFO_ITEM["biography"] = "instarex"
         my_test_photo_item = TEST_PHOTO_ITEM.copy()
         my_test_photo_item["like_count"] = self.bot.min_likes_to_like + 1
         my_test_photo_item["has_liked"] = False

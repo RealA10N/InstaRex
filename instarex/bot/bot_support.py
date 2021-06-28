@@ -1,5 +1,5 @@
 """
-    Support instabot's methods.
+    Support instarex's methods.
 """
 
 from __future__ import unicode_literals

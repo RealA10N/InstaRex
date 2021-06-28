@@ -3,8 +3,8 @@ import tempfile
 import pytest
 import responses
 
-from instabot import utils
-from instabot.api.config import API_URL, SIG_KEY_VERSION
+from instarex import utils
+from instarex.api.config import API_URL, SIG_KEY_VERSION
 
 from .test_bot import TestBot
 from .test_variables import (
