@@ -18,6 +18,7 @@ setup(
     version="0.119.0",
     description="Develop Instagram bots with ease!",
     long_description=long_description,
+    long_description_content_type='text/markdown',
     author="Alon Krymgand, Daniil Okhlopkov, Evgeny Kemerov",
     author_email="downtown2u@gmail.com, danokhlopkov@gmail.com, eskemerov@gmail.com",
     license="Apache Software License 2.0",
