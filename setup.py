@@ -15,7 +15,7 @@ with open(path.join(here, "requirements.txt")) as f:
 
 setup(
     name="instarex",
-    version="0.118.0",
+    version="0.119.0",
     description="Develop Instagram bots with ease!",
     long_description=long_description,
     author="Alon Krymgand, Daniil Okhlopkov, Evgeny Kemerov",
