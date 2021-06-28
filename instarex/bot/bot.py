@@ -122,7 +122,8 @@ import os
 import logging
 import datetime
 import atexit
-version = "0.117.0"
+
+import instarex
 
 
 # from instarex.api.api import API
@@ -276,7 +277,7 @@ class Bot(object):
         self.verbosity = verbosity
 
         self.logger = self.api.logger
-        self.logger.info("Instarex version: " + version + " Started")
+        self.logger.info(f"Instarex {instarex.__version__} Started")
         self.logger.debug("Bot imported from {}".format(__file__))
 
     @property
