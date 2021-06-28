@@ -59,7 +59,6 @@ is_py3 = version_info[0] == 3
 is_py37 = version_info[:2] == (3, 7)
 
 
-version = "0.117.0"
 current_path = os.path.abspath(os.getcwd())
 
 
@@ -85,10 +84,7 @@ class API(object):
         self.last_response = None
         self.total_requests = 0
 
-        # Setup logging
-        # instabot_version = Bot.version()
-        # self.logger = logging.getLogger("[instabot_{}]".format(instabot_version))
-        self.logger = logging.getLogger("instabot version: " + version)
+        self.logger = logging.getLogger(__name__)
 
         if not os.path.exists(base_path):
             os.makedirs(base_path)  # create base_path if not exists
